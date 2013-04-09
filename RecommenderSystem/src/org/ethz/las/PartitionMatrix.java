@@ -1,4 +1,4 @@
-package ethz.datamining.recommender;
+package org.ethz.las;
 
 import java.io.IOException;
 import java.util.Iterator;
