@@ -106,7 +106,7 @@ public class PartitionMatrix {
 			long[] band;
 			for (int i = 0; i < NBANDS; i++) {
 				band = Arrays
-						.copyOfRange(signature, i * NROWS, i * (NROWS + 1));
+						.copyOfRange(signature, i * NROWS, (i + 1) * NROWS);
 				output.collect(
 						new Text(i + " " + hashFunctions[i].hashVector(band)),
 						key);
