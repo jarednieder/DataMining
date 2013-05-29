@@ -1,12 +1,17 @@
 package myPolicy;
 
-import static java.lang.Math.*;
+import static java.lang.Math.log;
+import static java.lang.Math.sqrt;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
 
 import org.ethz.las.bandit.logs.yahoo.Article;
 import org.ethz.las.bandit.logs.yahoo.User;
@@ -42,17 +47,23 @@ public class MyPolicy implements ContextualBanditPolicy<User, Article, Boolean> 
 		Map<Integer, Double[]> articleMap = new HashMap<Integer, Double[]>();
 		BufferedReader br = null;
 		String line;
-		String[] lineSplit;
 		Integer articleId;
 		Double[] articleFeatures = new Double[6];
+		Scanner s;
+
 		articleFeatures[0] = ONE;
 		try {
 			br = new BufferedReader(new FileReader(file));
 			while ((line = br.readLine()) != null) {
-				lineSplit = line.split(" ");
-				articleId = Integer.parseInt(lineSplit[0].trim());
-				for (int i = 2; i < lineSplit.length; i++) {
-					articleFeatures[i - 1] = Double.parseDouble(lineSplit[i]);
+				s = new Scanner(line);
+				articleId = s.nextInt();
+
+				// Skip the first feature (it's always 1.0)
+				s.nextDouble();
+
+				// Read the rest of the features
+				for (int i = 1; i < 6; i++) {
+					articleFeatures[i] = s.nextDouble();
 				}
 				articleMap.put(articleId, articleFeatures);
 			}
