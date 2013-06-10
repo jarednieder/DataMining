@@ -1,0 +1,64 @@
+% Created 2013-01-28 Mon 22:41
+\documentclass[11pt]{article}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage[pdftex]{hyperref}
+\usepackage[font=small,labelfont=bf]{caption}
+\geometry{a4paper, textwidth=6.5in, textheight=10in, marginparsep=7pt, marginparwidth=.6in}
+
+\title{Data Mining 2013: Project Report}
+\author{\textbf{Jared Niederhauser} - njared@student.ethz.ch\\
+\textbf{Ruben Wolff} - wolffr@student.ethz.ch}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Approximate retrieval - Locality Sensitive Hashing}
+\begin{enumerate}
+\item How was your choice of rows and bands motivated? How did you search for the
+best parameters? \\ \\
+\textbf{Answer}: \emph{We started with the formula in the book that related bands
+to rows for a given similarity threshold value.  Next we started with the most
+complex model we were allowed, (b*r $\approx$ 120). Finally we found the most
+suitable value for b such that the value was still below the maximum allowed
+value of 120}
+
+\item Conceptually, what would you have to change if you were asked to design an image
+  retrieval system that you can query for similar images given a large image
+  dataset? \\
+
+\textbf{Answer}: \emph{Depends on how the shingles are created}
+
+\end{enumerate}
+
+\section{Large-scale Supervised Learning}
+
+\begin{enumerate}
+\item Which algorithms did you consider? Which one did you choose for the
+  final submission and why? \\ \\
+\textbf{Answer}: \emph{Ruben to start}
+
+\item How did you select the parameters for your model? Which are the
+  most important parameters of your model? \\ \\
+\textbf{Answer}: \emph{Ruben to start}
+
+\end{enumerate}
+
+\section{Recommender Systems}
+
+\begin{enumerate}
+\item Which algorithm did you implement? What was your motivation? \\ \\
+\textbf{Answer}: \emph{TODO}
+
+\item How did you select the parameters for your model? \\ \\
+\textbf{Answer}: \emph{TODO}
+
+\item Does the performance measured in CTR increase monotonically during the
+execution of your algorithm? Why? \\ \\
+\textbf{Answer}: \emph{TODO}
+
+\end{enumerate}
+
+\end{document}
