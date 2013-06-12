@@ -5,6 +5,7 @@
 \usepackage{amsmath}
 \usepackage[pdftex]{hyperref}
 \usepackage[font=small,labelfont=bf]{caption}
+\usepackage{xfrac}
 \geometry{a4paper, textwidth=6.5in, textheight=10in, marginparsep=7pt, marginparwidth=.6in}
 
 \title{Data Mining 2013: Project Report}
@@ -19,17 +20,55 @@
 \begin{enumerate}
 \item How was your choice of rows and bands motivated? How did you search for the
 best parameters? \\ \\
-\textbf{Answer}: \emph{We started with the formula in the book that related bands
-to rows for a given similarity threshold value.  Next we started with the most
-complex model we were allowed, (b*r $\approx$ 120). Finally we found the most
-suitable value for b such that the value was still below the maximum allowed
-value of 120}
+\textbf{Answer}: To find suitable values for the number of bands and rows, we
+started with the equation $t=(\sfrac{1}{b})^{\sfrac{1}{r}}$ where $t$ is the
+desired similarity threshold, $b$ is the number of bands, and $r$ is the
+number of rows.  Using a fixed similarity threshold of 80\% (as defined by the project specification), we chose initial values for
+$b$ and $r$ that fell within the restriction $b*r\le 120$.  The
+starting values for our LSH algorithm were $b=10$ and $r=12$.  These starting
+values gave us a similarity threshold of
+$(\sfrac{1}{10})^{\sfrac{1}{12}}\approx0.825$ as well as maximizing the size of
+the signature matrix at 120 rows. \\ \\
+After defining an initial starting point $(b=10, r=12)$, we observed what
+happened when we 1) increased $b$ and decreased $r$ and 2) increased
+$r$ and decreased $b$ while still keeping the product of the two
+numbers below 120.  We noticed that we were receiving a much better score when
+we decreased the number of bands in favor of increasing the number of rows. 
+From there we confinued to decrease $b$ and increase $r$, while
+keeping the product as close to 120 as possible, until we didn't see an
+improvement in the score.  We observed an optimal band value at $b=5$.  Once we
+found this value we continued to decrease the value of $r$, starting from the
+highest value $r=24$, until no improvement in the score was noticed.  Using this
+approach we received a score of $\approx 0.93$, results that were competitive
+with many of the other groups.
 
 \item Conceptually, what would you have to change if you were asked to design an image
   retrieval system that you can query for similar images given a large image
   dataset? \\
 
-\textbf{Answer}: \emph{Depends on how the shingles are created}
+\textbf{Answer}: Code changes would depend largely on how the image shingles
+are constructed and whether or not Jaccard distance is an adequate distance
+metric. In the case of the project, the shingles were predefined for us, and we
+were expected to use Jaccard distance as a measure of likeness.
+This allowed us to use min-hashing techniques to efficiently compare the
+similarities of two documents.  This was a natural approach to use for the
+project as the shingles were defined using the words in the document.  If a
+word was present, that word's integer ID would appear in the document's shingle
+vector; however, such a representation seems poorly suited for creating image
+shingles. Consequently, using Jaccard distance as a means of determining the
+likeness of images could be ill-suited. \\ \\
+Even if Jaccard distance won't work well when comparing image shingles, there
+are several other distance metrics that could be well suited and that would
+still provide a locality sensitive hash family that is 
+$(d_1,d_2,p_1,p_2)-sensitive$. If such a distance function is sufficient for
+comparing images (e.g. cosine distance, Euclidean distance, etc.), very few changes 
+to the code would need to be made. These distance functions can still utilize 
+the and-or construction and thus the band/rows technique wouldn't need to be
+altered.  The only modifications necessary would be that of changing the hashing
+function to match the desired distance metric, and also selecting suitable
+values for the number of bands/rows such that the number of false
+positives/negatives are minimized.
+
 
 \end{enumerate}
 
