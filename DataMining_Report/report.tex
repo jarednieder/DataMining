@@ -89,14 +89,46 @@ positives/negatives are minimized.
 
 \begin{enumerate}
 \item Which algorithm did you implement? What was your motivation? \\ \\
-\textbf{Answer}: \emph{TODO}
+\textbf{Answer}: Our motivation in this project was to start with a very simple algorithm,
+measure its performance, and then improve upon it with more complex models.  In
+the end, we implemented 4 different algorithms: UCB1, LinUCB-Disjoint, LinUCB-Hybrid, and an SVM
+based approach.  In the end we acheived the best results with LinUCB-Disjoint,
+however we had very good results with the LinUCB-Hybrid and SVM based approaches
+as well.
 
 \item How did you select the parameters for your model? \\ \\
-\textbf{Answer}: \emph{TODO}
+\textbf{Answer}: For the LinUCB-Disjoint model, there is only one parameter
+$\alpha$ that controls the tradeoff between expected reward and our confidence,
+i.e. the tradeoff between exploring articles we aren't sure about and exploiting
+high performing articles. We chose our initial alpha value based on the equation
+$\alpha=1+\sqrt{\ln(2/\delta)/2}$ with $\delta=0.05$.  This gave us the value
+$\alpha\approx2.358$ which we refined through trial and error until we settled
+on the final value of $0.835$. \\ \\
+Additionally, we had an internal parameter for our code.  Because it was too
+inefficient to do matrix inversion every time the \textit{updatePolicy()}
+function was called, we had a parameter that controlled how many times an
+article, $a_i$, must be chosen before its matrix inverse, $A_{i}^{-1}$, was
+recalculated. We wanted to keep this value as low as possible without running
+over the designated time limit so that we would get good speed without
+negatively impacting the CTR. We found that setting this value to 5 (i.e.
+$A_{i}^{-1}$ would be updated every $5^{th}$ time the $i^{th}$ article was
+chosen) gave us a good balance between speed and performance.
 
 \item Does the performance measured in CTR increase monotonically during the
 execution of your algorithm? Why? \\ \\
-\textbf{Answer}: \emph{TODO}
+\textbf{Answer}: No, the CTR does not increase monotonically during the
+algorithm's execution.  The inherent nature of these explore-exploit algorithms
+is that options with suboptimal previous performance will be chosen in an effort
+to increase our confidence in their expected return.  When the algorithm first
+starts, all choices are unknown and thus the CTR increases/decreases solely by
+chance.  However, as we collect more results from each of the articles we become
+more confident that our empirical model approaches the true model.  As a result,
+there may be steps during the algorithm's execution where the intermediate CTR
+is higher than the CTR achieved by the final learned model.  A trivial example
+of this would be the algorithm's CTR after a single iteration.  If the
+algorithm, by chance alone, manages to correctly choose an article that was
+clicked, the CTR will be at a perfect $1.0$.  This, however, is a meaningless
+CTR that is not indicative of the final CTR and will surely decrease over time.
 
 \end{enumerate}
 
