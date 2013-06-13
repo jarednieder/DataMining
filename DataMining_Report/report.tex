@@ -77,7 +77,10 @@ positives/negatives are minimized.
 \begin{enumerate}
 \item Which algorithms did you consider? Which one did you choose for the
   final submission and why? \\ \\
-\textbf{Answer}: \emph{Ruben to start}
+\textbf{Answer}:  
+We considered an SVM solution directly but it needed to be approximated due to the scale of the input data. Another possibility would have been to take the entire dataset as a matrix where users are rows and columns are all possible stories they could have clicked on, with some preprocessing this matrix could have been transformed using SVD and cutting out small simgular values. The dataset did not lend itself well for the SVD solution becuase each user gives very few datapoints and with this method we are not using the feature information of the users. It would have been also possible to fit a regression curve to an augmented [user, article] vector with the Y-axis simply being wether or not the user clicked the article. But this approch is better fitting for data where the user gives a rating not a simple click or no-click. 
+\\ \\
+We chose Online Support Vector Machien(SVM). SVMs have good theoretical garanties but, since in this project we had very large training set the run time of the quadratic programming needed for standard SVMs were not acceptable. Online convex programming can be used to appriximate the optimal decision boundry after observing each datapoint individually. The regret of Online Convex Programming for a givven loss function $l$ and the function to be optimized $f$. In the case of the online SVM $f$ is a lagrange transformation of $||w||$ with constraint that for all points $x_i$ are classified correctly using $w^T x_i + b$. The regret of Online convex programming is bounded by $R_T \leq \frac{||S||^2 \sqrt{T}}{2} + (\sqrt{T} - \frac{1}{2}) max_t(||\nabla f_t||^2)$. Where $S$ is the feasible set of solutions and $T$ is the number of steps or datapoints we have. An additional benefit of Online SVM is that it can be easily divided among machines in a Mapreduce fation.  
 
 \item How did you select the parameters for your model? Which are the
   most important parameters of your model? \\ \\
