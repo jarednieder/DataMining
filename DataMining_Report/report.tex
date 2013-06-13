@@ -78,13 +78,42 @@ positives/negatives are minimized.
 \item Which algorithms did you consider? Which one did you choose for the
   final submission and why? \\ \\
 \textbf{Answer}:  
-We considered an SVM solution directly but it needed to be approximated due to the scale of the input data. Another possibility would have been to take the entire dataset as a matrix where users are rows and columns are all possible stories they could have clicked on, with some preprocessing this matrix could have been transformed using SVD and cutting out small simgular values. The dataset did not lend itself well for the SVD solution becuase each user gives very few datapoints and with this method we are not using the feature information of the users. It would have been also possible to fit a regression curve to an augmented [user, article] vector with the Y-axis simply being wether or not the user clicked the article. But this approch is better fitting for data where the user gives a rating not a simple click or no-click. 
+We considered an SVM solution directly but it needed to be approximated due to
+the scale of the input data. Another possibility would have been to take the
+entire dataset as a matrix where users are rows and columns are all possible
+stories they could have clicked on, with some preprocessing this matrix could
+have been transformed using SVD and cutting out small singular values. The
+dataset did not lend itself well for the SVD solution because each user gives
+very few datapoints and with this method we are not using the feature
+information of the users. It would have been also possible to fit a regression
+curve to an augmented [user, article] vector with the Y-axis simply being
+whether or not the user clicked the article. But this approach is better fitting
+for data where the user gives a rating not a simple click or no-click.
 \\ \\
-We chose Online Support Vector Machien(SVM). SVMs have good theoretical garanties but, since in this project we had very large training set the run time of the quadratic programming needed for standard SVMs were not acceptable. Online convex programming can be used to appriximate the optimal decision boundry after observing each datapoint individually. The regret of Online Convex Programming for a givven loss function $l$ and the function to be optimized $f$. In the case of the online SVM $f$ is a lagrange transformation of $||w||$ with constraint that for all points $x_i$ are classified correctly using $w^T x_i + b$. The regret of Online convex programming is bounded by $R_T \leq \frac{||S||^2 \sqrt{T}}{2} + (\sqrt{T} - \frac{1}{2}) max_t(||\nabla f_t||^2)$. Where $S$ is the feasible set of solutions and $T$ is the number of steps or datapoints we have. An additional benefit of Online SVM is that it can be easily divided among machines in a Mapreduce fation.  
+We chose Online Support Vector Machine(SVM). SVMs have good theoretical
+guarantees but, since in this project we had very large training set the run
+time of the quadratic programming needed for standard SVMs were not acceptable.
+Online convex programming can be used to approximate the optimal decision
+boundary after observing each datapoint individually. The regret of Online
+Convex Programming for a given loss function $l$ and the function to be
+optimized $f$. In the case of the online SVM $f$ is a LaGrange transformation
+of $||w||$ with constraint that for all points $x_i$ are classified correctly
+using $w^T x_i + b$. The regret of Online convex programming is bounded by $R_T
+\leq \frac{||S||^2 \sqrt{T}}{2} + (\sqrt{T} - \frac{1}{2}) max_t(||\nabla
+f_t||^2)$. Where $S$ is the feasible set of solutions and $T$ is the number of
+steps or datapoints we have. An additional benefit of Online SVM is that it can
+be easily divided among machines in a MapReduce fashion.
 
 \item How did you select the parameters for your model? Which are the
   most important parameters of your model? \\ \\
-\textbf{Answer}: The model paramaters were choosen by sampeling from the possible paramater space and then doing a short gradiant descent starting from the best sample. The paramaters were compared based on 5 fold cross validation. The most important paramaters for the paralel gradiant descent $\lambda$ and $\eta$. $\lambda$ is the constraint on the norm of the normal vector of the desicion plane $w$, as in $S=(w:||w||\leq \frac{1}{\lambda})$.and $\eta$ can be considered a step size for changing $w$ as in $w_{t+1} = Proj_S(w_t - \eta \nabla f_t(w_t))$.
+\textbf{Answer}: The model parameters were chosen by sampling from the
+possible parameter space and then doing a short gradient descent starting from
+the best sample. The parameters were compared based on 5 fold cross validation.
+The most important parameters for the parallel gradient descent $\lambda$ and
+$\eta$. $\lambda$ is the constraint on the norm of the normal vector of the
+decision plane $w$, as in $S=(w:||w||\leq \frac{1}{\lambda})$.and $\eta$ can be
+considered a step size for changing $w$ as in $w_{t+1} = Proj_S(w_t - \eta
+\nabla f_t(w_t))$.
 
 \end{enumerate}
 
