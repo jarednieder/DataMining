@@ -84,7 +84,7 @@ We chose Online Support Vector Machien(SVM). SVMs have good theoretical garantie
 
 \item How did you select the parameters for your model? Which are the
   most important parameters of your model? \\ \\
-\textbf{Answer}: \emph{Ruben to start}
+\textbf{Answer}: The model paramaters were choosen by sampeling from the possible paramater space and then doing a short gradiant descent starting from the best sample. The paramaters were compared based on 5 fold cross validation. The most important paramaters for the paralel gradiant descent $\lambda$ and $\eta$. $\lambda$ is the constraint on the norm of the normal vector of the desicion plane $w$, as in $S=(w:||w||\leq \frac{1}{\lambda})$.and $\eta$ can be considered a step size for changing $w$ as in $w_{t+1} = Proj_S(w_t - \eta \nabla f_t(w_t))$.
 
 \end{enumerate}
 
