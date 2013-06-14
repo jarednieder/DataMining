@@ -87,17 +87,17 @@ dataset did not lend itself well for the SVD solution because each user gives
 very few datapoints and with this method we are not using the feature
 information of the users. It would have been also possible to fit a regression
 curve to an augmented [user, article] vector with the Y-axis simply being
-whether or not the user clicked the article. But this approach is better fitting
+whether or not the user clicked the article. But this approach is better suited
 for data where the user gives a rating not a simple click or no-click.
 \\ \\
 We chose Online Support Vector Machine(SVM). SVMs have good theoretical
-guarantees but, since in this project we had very large training set the run
+guarantees but, since in this project we had very large training set, the run
 time of the quadratic programming needed for standard SVMs were not acceptable.
 Online convex programming can be used to approximate the optimal decision
 boundary after observing each datapoint individually. The regret of Online
 Convex Programming for a given loss function $l$ and the function to be
 optimized $f$. In the case of the online SVM $f$ is a LaGrange transformation
-of $||w||$ with constraint that for all points $x_i$ are classified correctly
+of $||w||$ with constraint that all points $x_i$ are classified correctly
 using $w^T x_i + b$. The regret of Online convex programming is bounded by $R_T
 \leq \frac{||S||^2 \sqrt{T}}{2} + (\sqrt{T} - \frac{1}{2}) max_t(||\nabla
 f_t||^2)$. Where $S$ is the feasible set of solutions and $T$ is the number of
@@ -109,8 +109,8 @@ be easily divided among machines in a MapReduce fashion.
 \textbf{Answer}: The model parameters were chosen by sampling from the
 possible parameter space and then doing a short gradient descent starting from
 the best sample. The parameters were compared based on 5 fold cross validation.
-The most important parameters for the parallel gradient descent $\lambda$ and
-$\eta$. $\lambda$ is the constraint on the norm of the normal vector of the
+The most important parameters for the parallel gradient descent are $\lambda$
+and $\eta$. $\lambda$ is the constraint on the norm of the normal vector of the
 decision plane $w$, as in $S=(w:||w||\leq \frac{1}{\lambda})$.and $\eta$ can be
 considered a step size for changing $w$ as in $w_{t+1} = Proj_S(w_t - \eta
 \nabla f_t(w_t))$.
@@ -123,10 +123,13 @@ considered a step size for changing $w$ as in $w_{t+1} = Proj_S(w_t - \eta
 \item Which algorithm did you implement? What was your motivation? \\ \\
 \textbf{Answer}: Our motivation in this project was to start with a very simple algorithm,
 measure its performance, and then improve upon it with more complex models.  In
-the end, we implemented 4 different algorithms: UCB1, LinUCB-Disjoint, LinUCB-Hybrid, and an SVM
-based approach.  In the end we achieved the best results with LinUCB-Disjoint,
-however we had very good results with the LinUCB-Hybrid and SVM based approaches
-as well.
+the end, we implemented 4 different algorithms: UCB1, LinUCB-Disjoint,
+LinUCB-Hybrid, and an SVM based approach.  The first and simplest algorithm we
+implemented was UCB1.  Because it is such a simple, context-free model, it
+didn't yield very good performance, but it did provide us a good starting point
+for improvement in implementing the more complex algorithms. In the end we
+achieved the best results with LinUCB-Disjoint, however we had comparable
+results with the LinUCB-Hybrid and our SVM based approaches as well.
 
 \item How did you select the parameters for your model? \\ \\
 \textbf{Answer}: For the LinUCB-Disjoint model, there is only one parameter
