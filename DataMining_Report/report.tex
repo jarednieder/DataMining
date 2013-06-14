@@ -156,14 +156,15 @@ algorithm's execution.  The inherent nature of these explore-exploit algorithms
 is that options with suboptimal previous performance will be chosen in an effort
 to increase our confidence in their expected return.  When the algorithm first
 starts, all choices are unknown and thus the CTR increases/decreases solely by
-chance.  However, as we collect more results from each of the articles we become
-more confident that our empirical model approaches the true model.  As a result,
-there may be steps during the algorithm's execution where the intermediate CTR
-is higher than the CTR achieved by the final learned model.  A trivial example
-of this would be the algorithm's CTR after a single iteration.  If the
-algorithm, by chance alone, manages to correctly choose an article that was
-clicked, the CTR will be at a perfect $1.0$.  This, however, is a meaningless
-CTR that is not indicative of the final CTR and will surely decrease over time.
+chance.  However, as we collected more results from each of the articles we
+become more confident that our empirical model was approaching the true model. 
+As a result, there may be steps during the algorithm's execution where the
+intermediate CTR is higher than the CTR achieved by the final learned model.  A
+trivial example of this would be the algorithm's CTR after a single iteration. 
+If the algorithm, by chance alone, manages to correctly choose an article that
+was clicked, the CTR will be at a perfect $1.0$.  This, however, is a
+meaningless value that is not indicative of the final CTR and will surely
+decrease over time.
 
 \end{enumerate}
 
